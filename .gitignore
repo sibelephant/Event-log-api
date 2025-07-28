@@ -49,6 +49,24 @@ build-errors.log
 
 # Temporary files and directories
 tmp/
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+
+# IDE and editor files
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Documentation (private)
+explanations.md
+
+# OS generated files
+tmp/
 temp/
 .tmp
 

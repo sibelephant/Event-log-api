@@ -6,6 +6,7 @@ A modern REST API for event management built with Go, Gin, and Prisma. This API 
 
 - **User Management**: Create, read, and manage user accounts
 - **Event Management**: Create and list events with full details
+- **Attendee Management**: Register users for events, manage attendance
 - **Database Integration**: SQLite with Prisma ORM for type-safe database operations
 - **Environment Configuration**: Secure environment variable management
 - **Live Reload**: Air for development with hot reloading
@@ -28,7 +29,8 @@ Event-App/
 │   ├── main.go             # Main server setup
 │   ├── routes.go           # Route definitions
 │   ├── users.go            # User handlers
-│   └── events.go           # Event handlers
+│   ├── events.go           # Event handlers
+│   └── attendees.go        # Attendee handlers
 ├── internal/
 │   ├── config/             # Configuration management
 │   │   └── config.go       # Environment config loader
@@ -36,8 +38,10 @@ Event-App/
 │   │   └── database.go     # Prisma client setup
 │   └── models/             # Data models
 │       ├── users.go        # User request/response models
-│       └── events.go       # Event request/response models
-├── schema.prisma           # Prisma schema definition
+│       ├── events.go       # Event request/response models
+│       └── attendees.go    # Attendee request/response models
+├── prisma/
+│   └── schema.prisma       # Prisma schema definition
 ├── .env.example           # Environment variables template
 ├── .air.toml              # Air live reload configuration
 └── README.md              # This file
@@ -208,6 +212,90 @@ Content-Type: application/json
 GET /events
 ```
 
+### 👥 Attendee Endpoints
+
+#### Register User for Event
+
+```http
+POST /attendees
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "event_id": 2
+}
+```
+
+**Response:**
+
+```json
+{
+  "message": "Successfully registered for event",
+  "attendee": {
+    "id": 1,
+    "user_id": 1,
+    "event_id": 2
+  }
+}
+```
+
+#### Get All Attendees
+
+```http
+GET /attendees
+```
+
+#### Get Event Attendees
+
+```http
+GET /events/{event_id}/attendees
+```
+
+**Response:**
+
+```json
+{
+  "event": {
+    "id": 2,
+    "name": "Workshop",
+    "description": "Programming workshop",
+    "date": "2024-11-15T14:00:00Z",
+    "location": "San Francisco"
+  },
+  "attendees_count": 2,
+  "attendees": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "event_id": 2,
+      "user": {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john@example.com"
+      }
+    }
+  ]
+}
+```
+
+#### Get User's Attending Events
+
+```http
+GET /user/{user_id}/attending-events
+```
+
+#### Remove User from Event (by attendee ID)
+
+```http
+DELETE /attendees/{id}
+```
+
+#### Remove User from Event (by user and event ID)
+
+```http
+DELETE /user/{user_id}/events/{event_id}
+```
+
 ## 🔧 Development
 
 ### Environment Variables
@@ -270,11 +358,25 @@ curl -X POST http://localhost:8080/api/v1/events \
     "owner_id": 1
   }'
 
+# Register user for event
+curl -X POST http://localhost:8080/api/v1/attendees \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 1,
+    "event_id": 1
+  }'
+
 # Get all users
 curl http://localhost:8080/api/v1/users
 
 # Get all events
 curl http://localhost:8080/api/v1/events
+
+# Get event attendees
+curl http://localhost:8080/api/v1/events/1/attendees
+
+# Get user's attending events
+curl http://localhost:8080/api/v1/user/1/attending-events
 ```
 
 ## 🚀 Deployment
@@ -338,7 +440,7 @@ If you have any questions or need help, please:
 ## 🔮 Roadmap
 
 - [ ] JWT Authentication middleware
-- [ ] Event attendance management
+- [x] Event attendance management ✅
 - [ ] Event search and filtering
 - [ ] File upload for event images
 - [ ] Email notifications
