@@ -21,8 +21,7 @@ go.work
 /tmp/
 /build/
 /dist/
-main
-api
+
 
 # Environment variables - IMPORTANT: Never commit these!
 .env
