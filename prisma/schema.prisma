@@ -1,0 +1,36 @@
+datasource db {
+    provider = "sqlite"
+    url      = "file:./dev.db"
+}
+
+generator go {
+    provider = "go run github.com/steebchen/prisma-client-go"
+}
+
+model Users {
+    id        Int         @id @default(autoincrement())
+    email     String      @unique
+    name      String
+    password  String
+    events    Events[]    @relation("EventOwner")
+    attendees Attendees[]
+}
+
+model Events {
+    id          Int         @id @default(autoincrement())
+    owner_id    Int
+    name        String
+    description String
+    date        DateTime
+    location    String
+    owner       Users       @relation("EventOwner", fields: [owner_id], references: [id], onDelete: Cascade)
+    attendees   Attendees[]
+}
+
+model Attendees {
+    id       Int    @id @default(autoincrement())
+    user_id  Int
+    event_id Int
+    user     Users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+    event    Events @relation(fields: [event_id], references: [id], onDelete: Cascade)
+}

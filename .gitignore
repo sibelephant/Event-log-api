@@ -1,0 +1,134 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Go workspace file
+go.work
+
+# Build output
+/tmp/
+/build/
+/dist/
+main
+api
+
+# Environment variables - IMPORTANT: Never commit these!
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+dev.db
+test.db
+production.db
+
+# Logs
+*.log
+logs/
+build-errors.log
+
+# Air live reload configuration (optional - you may want to commit this)
+# Uncomment the line below if you want to ignore Air config
+# .air.toml
+
+# Temporary files and directories
+tmp/
+temp/
+.tmp
+
+# Prisma generated files (DO NOT COMMIT THESE)
+prisma/db/*_gen.go
+prisma/db/query-engine*
+
+# IDE and editor files
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Go specific files
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+
+# Folders
+_obj
+_test
+
+# Architecture specific extensions/prefixes
+*.[568vq]
+[568vq].out
+
+# cgo generated files
+*.cgo1.go
+*.cgo2.c
+_cgo_defun.c
+_cgo_gotypes.go
+_cgo_export.*
+
+# Benchmark results
+*.bench
+
+# Memory profiler files
+*.mprof
+
+# CPU profiler files
+*.prof
+
+# Coverage files
+*.coverprofile
+coverage.txt
+coverage.html
+
+# Fuzz testing
+fuzz/
+
+# Go module cache backup
+go.sum.backup
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Optional files (uncomment if needed)
+# Prisma migrations (uncomment if you want to ignore migrations)
+# prisma/migrations/
+
+# Backup files
+*.bak
+*.backup
+*~
